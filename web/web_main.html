@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Мониторинг физического развития детей и подростков</title>
+    <script src="eel.js" ></script>
+    <link rel="icon" type="image/png" href="https://o.remove.bg/downloads/d75c15a5-3df0-4f79-b396-0cee7ff60741/icon-removebg-preview.png">
+    <link rel="stylesheet" href="./css/web_main.css">
+</head>
+<body>
+    <h1> </h1>
+    <a class="header">Введите данные</a>
+    <h1></h1>
+
+    <div class="front-sign-in">
+        <input type="text" class="middle" id="last_name" placeholder="Фамилия">
+        <input type="text" class="middle" id="first_name" placeholder="Имя">
+        <input type="text" class="middle" id="dad_name" placeholder="Отчество">
+        <a><font size="4">Пол</font></a>
+        <a></a>
+        <input type="radio" name="gender"> <a><font size="3">М</font></a>
+        <input type="radio" name="gender"> <a><font size="3">Ж</font></a>
+
+    </div>
+    <div>
+        <a><font size="1">Дата рождения</font> <br><br>
+            <input type="date" class="middle" id = "dob" name="dob"></a>
+        <a><font size="1">Дата осмотра</font> <br><br>
+            <input type="date" class="middle" id = "doi" name="doi"></a>
+    </div>
+        <div>
+            <a><font size="1">Длина тела</font> <br><br>
+                <input type="text" class="short"></a>
+            <a><font size="1">Масса тела</font> <br><br>
+                <input type="text" class="short"></a>
+            <a><font size="1">Индекс Кетле</font> <br><br>
+                <input type="text" class="short"></a>
+            <a></a>
+            <a></a>
+            <a><font size="1">Толщина жировой <br> складки (живот)</font> <br><br>
+                <input type="text" class="short"></a>
+            <a><font size="1">Толщина жировой <br> складки (плечо)</font> <br><br>
+                <input type="text" class="short"></a>
+            <a><font size="1">Толщина жировой <br> складки (спина)</font> <br><br>
+                <input type="text" class="short"></a>
+        </div>
+
+        <div>
+            <a><font size="1">Окружность<br> грудной клетки</font> <br><br>
+                <input type="text" class="short"></a>
+            <a><font size="1">Окружность талии </font> <br><br>
+                <input type="text" class="short"></a>
+            <a><font size="1">Окружность <br> правого плеча</font> <br><br>
+                <input type="text" class="short"></a>
+            <a><font size="1">Окружность <br> левого плеча</font> <br><br>
+                <input type="text" class="short"></a>
+            <a><font size="1">Окружность бёдер</font> <br><br>
+                <input type="text" class="short"></a>
+            <a><font size="1">Окружность шеи</font> <br><br>
+                <input type="text" class="short"></a>
+            <a><font size="1">Окружность запястья</font> <br><br>
+                <input type="text" class="short"></a>
+        </div>
+        <div>
+            <a><font size="1">Жизненная <br> ёмкость лёгких</font> <br><br>
+                <input type="text" class="short"></a>
+            <a><font size="1">Частота сердечных <br> сокращений</font> <br><br>
+                <input type="text" class="short"></a>
+            <a></a>
+            <a></a>
+            <a><font size="1">Систолическое  <br> артериальное <br> давление</font> <br><br>
+                <input type="text" class="short"></a>
+            <a><font size="1">Диастолическое <br> артериальное <br> давление</font> <br><br>
+                <input type="text" class="short"></a>
+            <a></a>
+            <a></a>
+            <a><font size="1">Динамометрия <br> правой кисти</font> <br><br>
+                <input type="text" class="short"></a>
+            <a><font size="1">Динамометрия <br> левой кисти</font> <br><br>
+                <input type="text" class="short"></a>
+        </div>
+
+    <h1></h1>
+
+        <button class="border-button" type="button" value="Submit" id="submit">Отправить</button>
+
+
+    <h1></h1>
+        <a class="header">Результат</a>
+    <input id="output">
+        <h1></h1>
+
+<script src="js_functions.js"></script>
+
+</body>
+</html>
