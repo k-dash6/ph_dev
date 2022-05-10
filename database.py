@@ -1,12 +1,11 @@
 from tkinter import *
-from tkinter import messagebox as mb
 from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey, text, Date, create_engine, CheckConstraint, \
     Index, DDL, event, Numeric
 from sqlalchemy_utils import database_exists, create_database, drop_database
 import re
 import psycopg2
 import eel
-import datetime
+from datetime import *
 
 # root = Tk()
 # root.title("Physical development")
@@ -2487,40 +2486,11 @@ def insert_init_data(metadata):
     return patients
 
 
-patients = Table('Пациенты', metadata,
-                 Column('Идентификатор', Integer, autoincrement=True, primary_key=True),
-                 Column('Фамилия', String),
-                 Column('Имя', String),
-                 Column('Отчество', String),
-                 Column('Пол', String),
-                 Column('Дата рождения', Date, nullable=False),
-                 Column('Дата осмотра', Date, nullable=False),
-                 Column('Длина тела', Numeric(6, 2)),
-                 Column('Масса тела', Numeric(6, 2)),
-                 Column('Индекс Кетле', Numeric(6, 2)),
-                 Column('Окружность грудной клетки', Numeric(6, 2)),
-                 Column('Окружность талии', Numeric(6, 2)),
-                 Column('Окружность правого плеча', Numeric(6, 2)),
-                 Column('Окружность левого плеча', Numeric(6, 2)),
-                 Column('Окружность бёдер', Numeric(6, 2)),
-                 Column('Окружность шеи', Numeric(6, 2)),
-                 Column('Окружность запястья', Numeric(6, 2)),
-                 Column('Жизненная ёмкость лёгких', Numeric(6, 2)),
-                 Column('Динамометрия правой кисти', Numeric(6, 2)),
-                 Column('Динамометрия левой кисти', Numeric(6, 2)),
-                 Column('Сист. артериальное давление', Numeric(6, 2)),
-                 Column('Диаст. артериальное давление', Numeric(6, 2)),
-                 Column('Частота сердечных сокращений', Numeric(6, 2)),
-                 Column('Толщина жировой складки (живот)', Numeric(6, 2)),
-                 Column('Толщина жировой складки (плечо)', Numeric(6, 2)),
-                 Column('Толщина жировой складки (спина)', Numeric(6, 2)),
-                 extend_existing=True)
-
-def add_patient(patients, last_name, first_name, dad_name, dob, doi):
+def add_patient(patients, last_name, first_name, dad_name, gender, dob, doi):
     patients_insert = patients.insert()
     patients_insert.compile()
     patients_insert.execute(
-        [{'Фамилия': last_name, 'Имя': first_name, 'Отчество': dad_name, 'Дата рождения': dob, 'Дата осмотра': doi}])
+        [{'Фамилия': last_name, 'Имя': first_name, 'Отчество': dad_name, 'Пол': gender, 'Дата рождения': dob, 'Дата осмотра': doi}])
 
 
 def drop_db(btn):  # удаление базы данных

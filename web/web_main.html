@@ -18,8 +18,30 @@
         <input type="text" class="middle" id="dad_name" placeholder="Отчество">
         <a><font size="4">Пол</font></a>
         <a></a>
-        <input type="radio" name="gender"> <a><font size="3">М</font></a>
-        <input type="radio" name="gender"> <a><font size="3">Ж</font></a>
+        <input type="checkbox" class="checkbox" id="male" value="М">
+        <label class="labelcheckbox" for="male">М</label><Br>
+        <input type="checkbox" class="checkbox" id="female" value="Ж">
+        <label class="labelcheckbox" for="female">Ж</label><Br>
+        <script type="text/javascript">
+        var handler = function ( event ){
+          event = event || window.event;
+          var target = event.target || event.srcElement;
+          if ( target.nodeType == 1 && target.nodeName.toLowerCase() == "input" && target.type == "checkbox" && target.checked ) {
+            var inputs = document.getElementsByTagName("input");
+            for ( var i = 0; inputs[i]; i++ ) {
+              if ( inputs[i].type == "checkbox" && inputs[i] != target ) {
+                inputs[i].checked = false;
+              }
+            }
+          }
+        }
+        if (document.addEventListener){
+          document.addEventListener('click', handler, false);
+        } else if (document.attachEvent){
+          document.attachEvent('onclick', handler);
+        }
+    </script>
+
 
     </div>
     <div>
