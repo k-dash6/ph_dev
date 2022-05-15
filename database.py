@@ -5,6 +5,7 @@ from sqlalchemy_utils import database_exists, create_database, drop_database
 import re
 import psycopg2
 import eel
+from dateutil.relativedelta import relativedelta #для подсчёта возраста
 from datetime import *
 
 # root = Tk()
@@ -133,7 +134,7 @@ def insert_init_data(metadata):
                    Column('Частота сердечных сокращений', Numeric(6, 2)),
                    extend_existing=True)
 
-    boy_5 = Table('Мальчики, 5 года', metadata,
+    boy_5 = Table('Мальчики, 5 лет', metadata,
                   Column('Длина тела', Numeric(6, 2)),
                   Column('Масса тела', Numeric(6, 2)),
                   Column('Окружность грудной клетки', Numeric(6, 2)),
@@ -145,7 +146,7 @@ def insert_init_data(metadata):
                   Column('Частота сердечных сокращений', Numeric(6, 2)),
                   extend_existing=True)
 
-    girl_5 = Table('Девочки, 5 года', metadata,
+    girl_5 = Table('Девочки, 5 лет', metadata,
                   Column('Длина тела', Numeric(6, 2)),
                   Column('Масса тела', Numeric(6, 2)),
                   Column('Окружность грудной клетки', Numeric(6, 2)),
@@ -157,7 +158,7 @@ def insert_init_data(metadata):
                   Column('Частота сердечных сокращений', Numeric(6, 2)),
                   extend_existing=True)
 
-    boy_55 = Table('Мальчики, 5,5 года', metadata,
+    boy_55 = Table('Мальчики, 5,5 лет', metadata,
                    Column('Длина тела', Numeric(6, 2)),
                    Column('Масса тела', Numeric(6, 2)),
                    Column('Окружность грудной клетки', Numeric(6, 2)),
@@ -169,7 +170,7 @@ def insert_init_data(metadata):
                    Column('Частота сердечных сокращений', Numeric(6, 2)),
                    extend_existing=True)
 
-    girl_55 = Table('Девочки, 5,5 года', metadata,
+    girl_55 = Table('Девочки, 5,5 лет', metadata,
                    Column('Длина тела', Numeric(6, 2)),
                    Column('Масса тела', Numeric(6, 2)),
                    Column('Окружность грудной клетки', Numeric(6, 2)),
@@ -2483,11 +2484,12 @@ def insert_init_data(metadata):
           'Толщина жировой складки (живот)': 3.7,
           'Толщина жировой складки (плечо)': 2.1,
           'Толщина жировой складки (спина)': 2.7}])
-    return patients
+    return patients, boy_3, boy_35, boy_4, boy_45, boy_5, boy_55, boy_6, boy_65, boy_7, boy_8, boy_9, boy_10, boy_11, boy_12, boy_13, boy_14, boy_15, boy_16, boy_17,\
+           girl_3, girl_35, girl_4, girl_45, girl_5, girl_55, girl_6, girl_65, girl_7, girl_8, girl_9, girl_10, girl_11, girl_12, girl_13, girl_14, girl_15, girl_16, girl_17
 
 
-def add_patient(patients, last_name, first_name, dad_name, gender, dob, doi):
-    patients_insert = patients.insert()
+def add_patient(last_name, first_name, dad_name, gender, dob, doi):
+    patients_insert = metadata.tables["Пациенты"].insert()
     patients_insert.compile()
     patients_insert.execute(
         [{'Фамилия': last_name, 'Имя': first_name, 'Отчество': dad_name, 'Пол': gender, 'Дата рождения': dob, 'Дата осмотра': doi}])
