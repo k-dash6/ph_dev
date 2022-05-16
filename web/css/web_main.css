@@ -173,3 +173,34 @@ input[type="text"]:focus:focus {
 .border-button:hover {
   background: rgba(255, 255, 255, .2);
 }
+
+input[type='checkbox'] {
+  display: inline-block;
+	height: 20px;
+	line-height: 20px;
+	margin-right: 10px;
+	position: relative;
+	vertical-align: middle;
+	font-size: 14px;
+	user-select: none;
+	}
+
+.output {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  font-family: Helvetica;
+  color: #fff;
+  display: inline-block;
+  font-size: 17px;
+  box-sizing: border-box;
+  line-height: 1.5;
+  padding: 0.375rem 0.75rem;
+  height: 135px;
+  width: 500px;
+  margin-left: 15px;
+  background: rgba(255, 255, 255, .2);
+  border-left: 1px solid white;
+  border-top: 1px solid white;
+  border-right: 1px solid white;
+  border-bottom: 1px solid white;
+  overflow: auto;
+}

@@ -12,15 +12,6 @@ from datetime import *
 # root.title("Physical development")
 # root.geometry("1555x720")  # размер окна
 
-metadata = MetaData()
-engine = None
-# url = None
-url = "postgresql+psycopg2://postgres:postgres@localhost:5432/physical_development"
-if not database_exists(url):
-    create_database(url)
-engine = create_engine(url, echo=False)
-metadata.bind = engine
-metadata.reflect()
 
 def insert_init_data(metadata):
     # metadata.drop_all()
@@ -2488,13 +2479,6 @@ def insert_init_data(metadata):
            girl_3, girl_35, girl_4, girl_45, girl_5, girl_55, girl_6, girl_65, girl_7, girl_8, girl_9, girl_10, girl_11, girl_12, girl_13, girl_14, girl_15, girl_16, girl_17
 
 
-def add_patient(last_name, first_name, dad_name, gender, dob, doi):
-    patients_insert = metadata.tables["Пациенты"].insert()
-    patients_insert.compile()
-    patients_insert.execute(
-        [{'Фамилия': last_name, 'Имя': first_name, 'Отчество': dad_name, 'Пол': gender, 'Дата рождения': dob, 'Дата осмотра': doi}])
-
-
 def drop_db(btn):  # удаление базы данных
     def changer():
         global metadata, engine, url
@@ -2789,3 +2773,18 @@ def select_data(btn, text_box, entry):
 # b14.place(x=340, y=275)
 #
 # root.mainloop()
+
+metadata = MetaData()
+# url = None
+url = "postgresql+psycopg2://postgres:postgres@localhost:5432/physical_development"
+
+database_exists = database_exists(url)
+if not database_exists:
+    create_database(url)
+
+engine = create_engine(url, echo=False)
+metadata.bind = engine
+metadata.reflect()
+
+if not database_exists:
+    insert_init_data(metadata)

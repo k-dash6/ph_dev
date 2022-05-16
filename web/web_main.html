@@ -16,12 +16,15 @@
         <input type="text" class="middle" id="last_name" placeholder="Фамилия">
         <input type="text" class="middle" id="first_name" placeholder="Имя">
         <input type="text" class="middle" id="dad_name" placeholder="Отчество">
+        <a>
         <a><font size="4">Пол</font></a>
         <a></a>
-        <input type="checkbox" class="checkbox" id="male" value="М">
-        <label class="labelcheckbox" for="male">М</label><Br>
-        <input type="checkbox" class="checkbox" id="female" value="Ж">
-        <label class="labelcheckbox" for="female">Ж</label><Br>
+
+       <a> <input type="checkbox" class="checkbox" id="male" value="М">
+        <label class="labelcheckbox" for="male">М</label></a>
+        <a><input type="checkbox" class="checkbox" id="female" value="Ж">
+        <label class="labelcheckbox" for="female">Ж</label></a>
+            </a>
         <script type="text/javascript">
         var handler = function ( event ){
           event = event || window.event;
@@ -52,65 +55,62 @@
     </div>
         <div>
             <a><font size="1">Длина тела</font> <br><br>
-                <input type="text" class="short"></a>
+                <input type="text" class="short" id="body_length"></a>
             <a><font size="1">Масса тела</font> <br><br>
-                <input type="text" class="short"></a>
-            <a><font size="1">Индекс Кетле</font> <br><br>
-                <input type="text" class="short"></a>
+                <input type="text" class="short" id="body_weight"></a>
             <a></a>
             <a></a>
             <a><font size="1">Толщина жировой <br> складки (живот)</font> <br><br>
-                <input type="text" class="short"></a>
+                <input type="text" class="short" id="t_stomach"></a>
             <a><font size="1">Толщина жировой <br> складки (плечо)</font> <br><br>
-                <input type="text" class="short"></a>
+                <input type="text" class="short" id="t_shoulder"></a>
             <a><font size="1">Толщина жировой <br> складки (спина)</font> <br><br>
-                <input type="text" class="short"></a>
+                <input type="text" class="short" id="t_back"></a>
         </div>
 
         <div>
             <a><font size="1">Окружность<br> грудной клетки</font> <br><br>
-                <input type="text" class="short"></a>
+                <input type="text" class="short" id="с_chest"></a>
             <a><font size="1">Окружность талии </font> <br><br>
-                <input type="text" class="short"></a>
+                <input type="text" class="short" id="с_waist"></a>
             <a><font size="1">Окружность <br> правого плеча</font> <br><br>
-                <input type="text" class="short"></a>
+                <input type="text" class="short" id="с_r_shoulders"></a>
             <a><font size="1">Окружность <br> левого плеча</font> <br><br>
-                <input type="text" class="short"></a>
+                <input type="text" class="short" id="с_l_shoulders"></a>
             <a><font size="1">Окружность бёдер</font> <br><br>
-                <input type="text" class="short"></a>
+                <input type="text" class="short" id="с_hips"></a>
             <a><font size="1">Окружность шеи</font> <br><br>
-                <input type="text" class="short"></a>
+                <input type="text" class="short" id="с_neck"></a>
             <a><font size="1">Окружность запястья</font> <br><br>
-                <input type="text" class="short"></a>
+                <input type="text" class="short" id="с_wrist"></a>
         </div>
         <div>
             <a><font size="1">Жизненная <br> ёмкость лёгких</font> <br><br>
-                <input type="text" class="short"></a>
+                <input type="text" class="short" id="lungs_capacity"></a>
             <a><font size="1">Частота сердечных <br> сокращений</font> <br><br>
-                <input type="text" class="short"></a>
+                <input type="text" class="short" id="heart_rate"></a>
             <a></a>
             <a></a>
             <a><font size="1">Систолическое  <br> артериальное <br> давление</font> <br><br>
-                <input type="text" class="short"></a>
+                <input type="text" class="short" id="systolic_pressure"></a>
             <a><font size="1">Диастолическое <br> артериальное <br> давление</font> <br><br>
-                <input type="text" class="short"></a>
+                <input type="text" class="short" id="diastolic_pressure"></a>
             <a></a>
             <a></a>
             <a><font size="1">Динамометрия <br> правой кисти</font> <br><br>
-                <input type="text" class="short"></a>
+                <input type="text" class="short" id="d_r_wrist"></a>
             <a><font size="1">Динамометрия <br> левой кисти</font> <br><br>
-                <input type="text" class="short"></a>
+                <input type="text" class="short" id="d_l_wrist"></a>
         </div>
 
-    <h1></h1>
+    <div>
+        <p><button class="border-button" type="button" value="Submit" id="submit">Отправить</button></p>
+    </div>
 
-        <button class="border-button" type="button" value="Submit" id="submit">Отправить</button>
-
-
-    <h1></h1>
-        <a class="header">Результат</a>
-    <input id="output">
-        <h1></h1>
+    <div>
+        <p><a class="header">Результат</a>
+        <div id="output" class="output"></div></p>
+    </div>
 
 <script src="js_functions.js"></script>
 
