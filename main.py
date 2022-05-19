@@ -2,4 +2,4 @@ from apps import *
 
 if __name__ == '__main__':
     eel.init("web")
-    eel.start("web_main.html", size=(900, 800))
+    eel.start("web_main.html", size=(1200, 800))

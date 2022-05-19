@@ -20,97 +20,200 @@
         <a><font size="4">Пол</font></a>
         <a></a>
 
-       <a> <input type="checkbox" class="checkbox" id="male" value="М">
+       <a> <input type="radio" class="checkbox" id="male" name="pos" value="М">
         <label class="labelcheckbox" for="male">М</label></a>
-        <a><input type="checkbox" class="checkbox" id="female" value="Ж">
+        <a><input type="radio" class="checkbox" id="female" name="pos" value="Ж">
         <label class="labelcheckbox" for="female">Ж</label></a>
             </a>
-        <script type="text/javascript">
-        var handler = function ( event ){
-          event = event || window.event;
-          var target = event.target || event.srcElement;
-          if ( target.nodeType == 1 && target.nodeName.toLowerCase() == "input" && target.type == "checkbox" && target.checked ) {
-            var inputs = document.getElementsByTagName("input");
-            for ( var i = 0; inputs[i]; i++ ) {
-              if ( inputs[i].type == "checkbox" && inputs[i] != target ) {
-                inputs[i].checked = false;
-              }
-            }
-          }
-        }
-        if (document.addEventListener){
-          document.addEventListener('click', handler, false);
-        } else if (document.attachEvent){
-          document.attachEvent('onclick', handler);
-        }
-    </script>
 
 
     </div>
-    <div>
-        <a><font size="1">Дата рождения</font> <br><br>
+        <a><font size="2">Дата рождения</font> <br><br>
             <input type="date" class="middle" id = "dob"></a>
-        <a><font size="1">Дата осмотра</font> <br><br>
+        <a><font size="2">Дата осмотра</font> <br><br>
             <input type="date" class="middle" id = "doi"></a>
-    </div>
         <div>
-            <a><font size="1">Длина тела</font> <br><br>
+            <a><font size="2">Длина тела</font> <br><br>
                 <input type="text" class="short" id="body_length"></a>
-            <a><font size="1">Масса тела</font> <br><br>
+            <a><font size="2">Масса тела</font> <br><br>
                 <input type="text" class="short" id="body_weight"></a>
             <a></a>
             <a></a>
-            <a><font size="1">Толщина жировой <br> складки (живот)</font> <br><br>
-                <input type="text" class="short" id="t_stomach"></a>
-            <a><font size="1">Толщина жировой <br> складки (плечо)</font> <br><br>
-                <input type="text" class="short" id="t_shoulder"></a>
-            <a><font size="1">Толщина жировой <br> складки (спина)</font> <br><br>
-                <input type="text" class="short" id="t_back"></a>
-        </div>
 
-        <div>
-            <a><font size="1">Окружность<br> грудной клетки</font> <br><br>
-                <input type="text" class="short" id="с_chest"></a>
-            <a><font size="1">Окружность талии </font> <br><br>
-                <input type="text" class="short" id="с_waist"></a>
-            <a><font size="1">Окружность <br> правого плеча</font> <br><br>
-                <input type="text" class="short" id="с_r_shoulders"></a>
-            <a><font size="1">Окружность <br> левого плеча</font> <br><br>
-                <input type="text" class="short" id="с_l_shoulders"></a>
-            <a><font size="1">Окружность бёдер</font> <br><br>
-                <input type="text" class="short" id="с_hips"></a>
-            <a><font size="1">Окружность шеи</font> <br><br>
-                <input type="text" class="short" id="с_neck"></a>
-            <a><font size="1">Окружность запястья</font> <br><br>
-                <input type="text" class="short" id="с_wrist"></a>
-        </div>
-        <div>
-            <a><font size="1">Жизненная <br> ёмкость лёгких</font> <br><br>
+            <a><font size="2">Жизненная <br> ёмкость лёгких</font> <br><br>
                 <input type="text" class="short" id="lungs_capacity"></a>
-            <a><font size="1">Частота сердечных <br> сокращений</font> <br><br>
+            <a><font size="2">Частота сердечных <br> сокращений</font> <br><br>
                 <input type="text" class="short" id="heart_rate"></a>
             <a></a>
             <a></a>
-            <a><font size="1">Систолическое  <br> артериальное <br> давление</font> <br><br>
+            <a><font size="2">Систолическое  <br> артериальное <br> давление</font> <br><br>
                 <input type="text" class="short" id="systolic_pressure"></a>
-            <a><font size="1">Диастолическое <br> артериальное <br> давление</font> <br><br>
+            <a><font size="2">Диастолическое <br> артериальное <br> давление</font> <br><br>
                 <input type="text" class="short" id="diastolic_pressure"></a>
             <a></a>
             <a></a>
-            <a><font size="1">Динамометрия <br> правой кисти</font> <br><br>
+            <a><font size="2">Динамометрия <br> правой кисти</font> <br><br>
                 <input type="text" class="short" id="d_r_wrist"></a>
-            <a><font size="1">Динамометрия <br> левой кисти</font> <br><br>
+            <a><font size="2">Динамометрия <br> левой кисти</font> <br><br>
                 <input type="text" class="short" id="d_l_wrist"></a>
-        </div>
+            <a></a>
+            <a></a>
+        <a><font size="2">Количество  <br> постоянных зубов</font> <br><br>
+                <input type="text" class="short" id="teeth"></a>
+    </div>
+            <div class="column1">
+           <a><font size="2">Развитие половой системы мальчиков</font></a><br>
 
-    <div>
-        <p><button class="border-button" type="button" value="Submit" id="submit">Отправить</button></p>
+                <p>
+       <input type="radio" class="checkbox" name="BP" id="BP0" value="P0">
+       <label class="labelcheckbox" for="BP0">P0</label><Br>
+
+       <input type="radio" class="checkbox" name="BP" id="BP1" value="P1">
+       <label class="labelcheckbox" for="BP1">P1</label><Br>
+
+       <input type="radio" class="checkbox" name="BP" id="BP2" value="P2">
+       <label class="labelcheckbox" for="BP2">P2</label><Br>
+
+       <input type="radio" class="checkbox" name="BP" id="BP3" value="P3">
+       <label class="labelcheckbox" for="BP3">P3</label><Br>
+
+                    <input type="radio" class="checkbox" name="BP" id="BP4" value="P4">
+       <label class="labelcheckbox" for="BP4">P4</label><Br>
+
+                    <input type="radio" class="checkbox" name="BP" id="BP5" value="P5">
+       <label class="labelcheckbox" for="BP5">P5</label><Br>
+        </p>
+
+                        <p>
+            <input type="radio" class="checkbox" name="BF" id="BF0" value="F0">
+       <label class="labelcheckbox" for="BF0">F0</label><Br>
+
+       <input type="radio" class="checkbox" name="BF" id="BF1" value="F1">
+       <label class="labelcheckbox" for="BF1">F1</label><Br>
+
+       <input type="radio" class="checkbox" name="BF" id="BF2" value="F2">
+       <label class="labelcheckbox" for="BF2">F2</label><Br>
+
+       <input type="radio" class="checkbox" name="BF" id="BF3" value="F3">
+       <label class="labelcheckbox" for="BF3">F3</label><Br>
+
+            <input type="radio" class="checkbox" name="BF" id="BF4" value="F4">
+       <label class="labelcheckbox" for="BF4">F4</label><Br>
+
+            <input type="radio" class="checkbox" name="BF" id="BF5" value="F5">
+       <label class="labelcheckbox" for="BF5">F5</label><Br>
+
+       </p>
+
+                        <p>
+       <input type="radio" class="checkbox" name="BAx" id="BAx0" value="Ax0">
+       <label class="labelcheckbox" for="BAx0">Ax0</label><Br>
+
+       <input type="radio" class="checkbox" name="BAx" id="BAx1" value="Ax1">
+       <label class="labelcheckbox" for="BAx1">Ax1</label><Br>
+
+       <input type="radio" class="checkbox" name="BAx" id="BAx2" value="Ax2">
+       <label class="labelcheckbox" for="BAx2">Ax2</label><Br>
+
+       <input type="radio" class="checkbox" name="BAx" id="BAx3" value="Ax3">
+       <label class="labelcheckbox" for="BAx3">Ax3</label><Br>
+
+            <input type="radio" class="checkbox" name="BAx" id="BAx4" value="Ax4">
+       <label class="labelcheckbox" for="BAx4">Ax4</label><Br>
+        </p>
+
+        <p>
+       <input type="radio" class="checkbox" name="BL" id="BL0" value="L0">
+       <label class="labelcheckbox" for="BL0">L0</label><Br>
+
+       <input type="radio" class="checkbox" name="BL" id="BL1" value="L1">
+       <label class="labelcheckbox" for="BL1">L1</label><Br>
+
+       <input type="radio" class="checkbox" name="BL" id="BL2" value="L2">
+       <label class="labelcheckbox" for="BL2">L2</label><Br>
+        </p>
+
+        <p>
+       <input type="radio" class="checkbox" name="BV" id="BV0" value="V0">
+       <label class="labelcheckbox" for="BV0">V0</label><Br>
+
+       <input type="radio" class="checkbox" name="BV" id="BV1" value="V1">
+       <label class="labelcheckbox" for="BV1">V1</label><Br>
+
+       <input type="radio" class="checkbox" name="BV" id="BV2" value="V2">
+       <label class="labelcheckbox" for="BV2">V2</label><Br>
+        </p>
+
+
     </div>
 
-    <div>
-        <p><a class="header">Результат</a>
-        <div id="output" class="output"></div></p>
+
+    <div class="column2">
+           <a><font size="2">Развитие половой системы девочек</font></a><br>
+
+        <p>
+       <input type="radio" class="checkbox" name="GMa" id="Ma0" value="Ma0">
+       <label class="labelcheckbox" for="Ma0">Ma0</label><Br>
+
+       <input type="radio" class="checkbox" name="GMa" id="Ma1" value="Ma1">
+       <label class="labelcheckbox" for="Ma1">Ma1</label><Br>
+
+       <input type="radio" class="checkbox" name="GMa" id="Ma2" value="Ma2">
+       <label class="labelcheckbox" for="Ma2">Ma2</label><Br>
+
+       <input type="radio" class="checkbox" name="GMa" id="Ma3" value="Ma3">
+       <label class="labelcheckbox" for="Ma3">Ma3</label><Br>
+        </p>
+        <p>
+       <input type="radio" class="checkbox" name="GP" id="P0" value="P0">
+       <label class="labelcheckbox" for="P0">P0</label><Br>
+
+       <input type="radio" class="checkbox" name="GP" id="P1" value="P1">
+       <label class="labelcheckbox" for="P1">P1</label><Br>
+
+       <input type="radio" class="checkbox" name="GP" id="P2" value="P2">
+       <label class="labelcheckbox" for="P2">P2</label><Br>
+
+       <input type="radio" class="checkbox" name="GP" id="P3" value="P3">
+       <label class="labelcheckbox" for="P3">P3</label><Br>
+       </p>
+
+        <p>
+       <input type="radio" class="checkbox" name="GAx" id="Ax0" value="Ax0">
+       <label class="labelcheckbox" for="Ax0">Ax0</label><Br>
+
+       <input type="radio" class="checkbox" name="GAx" id="Ax1" value="Ax1">
+       <label class="labelcheckbox" for="Ax1">Ax1</label><Br>
+
+       <input type="radio" class="checkbox" name="GAx" id="Ax2" value="Ax2">
+       <label class="labelcheckbox" for="Ax2">Ax2</label><Br>
+
+       <input type="radio" class="checkbox" name="GAx" id="Ax3" value="Ax3">
+       <label class="labelcheckbox" for="Ax3">Ax3</label><Br>
+       </p>
+
+        <p>
+       <input type="radio" class="checkbox" name="GMe" id="Me0" value="Me0">
+       <label class="labelcheckbox" for="Me0">Me0</label><Br>
+
+       <input type="radio" class="checkbox" name="GMe" id="Me1" value="Me1">
+       <label class="labelcheckbox" for="Me1">Me1</label><Br>
+
+       <input type="radio" class="checkbox" name="GMe" id="Me2" value="Me2">
+       <label class="labelcheckbox" for="Me2">Me2</label><Br>
+
+       <input type="radio" class="checkbox" name="GMe" id="Me3" value="Me3">
+       <label class="labelcheckbox" for="Me3">Me3</label><Br>
+       </p>
     </div>
+
+        <button class="border-button" type="button" value="Submit" id="submit">Отправить</button>
+
+    <div></div>
+        <a class="result">Результат</a>
+    <h6></h6>
+        <div id="output" class="output"></div>
+
 
 <script src="js_functions.js"></script>
 
