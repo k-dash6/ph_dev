@@ -1,4 +1,5 @@
 async function take_values (){
+    document.getElementById("output").value = [];
     let last_name = document.getElementById("last_name").value;
     let first_name = document.getElementById("first_name").value;
     let dad_name = document.getElementById("dad_name").value;
@@ -6,13 +7,12 @@ async function take_values (){
     let doi = document.getElementById("doi").value;
 
     let checkboxes = document.getElementsByName('pos');
-    let checkboxesChecked = [];
+    let gender;
     for (let index = 0; index < checkboxes.length; index++) {
         if (checkboxes[index].checked) {
-            checkboxesChecked.push(checkboxes[index].value);
+            gender = checkboxes[index].value;
          }
       }
-    let gender = checkboxesChecked[0];
 
     let body_length = document.getElementById("body_length").value;
     let body_weight = document.getElementById("body_weight").value;
@@ -41,11 +41,11 @@ document.getElementById("submit").onclick = take_values;
 
 function get_biological_params(gender){
     let biological_params;
-    if (gender == 'Ж'){
+    if (gender == 'F'){
         var ma_radio = document.getElementsByName('GMa');
         var p_radio = document.getElementsByName('GP');
         var ax_radio = document.getElementsByName('GAx');
-        var me_radio = document.getElementsByName('Gme');
+        var me_radio = document.getElementsByName('GMe');
         var ma;
         var p;
         var ax;
@@ -56,20 +56,18 @@ function get_biological_params(gender){
                 }
             if (p_radio[i].type === 'radio' && p_radio[i].checked) {
                 p = p_radio[i].value;
-               }
+                }
             if (ax_radio[i].type === 'radio' && ax_radio[i].checked) {
                 ax = ax_radio[i].value;
-               }
+                }
             if (me_radio[i].type === 'radio' && me_radio[i].checked) {
                 me = me_radio[i].value;
-               }
-            }
+                }
+                }
             biological_params = [ma, p, ax, me];
             }
 
-
-
-    if (gender == 'М'){
+    if (gender == 'M'){
         var bax_radio = document.getElementsByName('BAx');
         var ax;
         for (var i = 0; i < bax_radio.length; i++) {

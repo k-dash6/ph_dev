@@ -7,17 +7,17 @@ def float_range(start, end):
     return array
 
 
-teeth_dict = {'М': {7: list(range(6, 12)),
+teeth_dict = {'M': {7: list(range(6, 12)),
                     8: list(range(9, 14)),
                     9: list(range(10, 17)),
                     10: list(range(11, 20)),
                     11: list(range(14, 26)),
-                    12: list(range(20, 40))
+                    12: list(range(20, 33))
                     },
-              'Ж': {7: list(range(6, 12)),
+              'F': {7: list(range(6, 12)),
                     8: list(range(9, 14)),
                     9: list(range(11, 17)),
-                    10: list(range(20, 40))
+                    10: list(range(12, 33))
                     }
               }
 
