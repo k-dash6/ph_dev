@@ -7,6 +7,7 @@ import psycopg2
 import eel
 from dateutil.relativedelta import relativedelta #для подсчёта возраста
 from datetime import *
+import os
 
 # root = Tk()
 # root.title("Physical development")

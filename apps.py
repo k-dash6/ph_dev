@@ -55,7 +55,7 @@ def calculate_centiles(last_name, first_name, dad_name, gender, dob, doi, body_l
     d_r_wrist_centile = get_centiles(table, 'Динамометрия правой кисти', d_r_wrist)
     d_l_wrist_centile = get_centiles(table, 'Динамометрия левой кисти', d_l_wrist)
 
-    if lungs_capacity_centile <= 2 and d_l_wrist_centile <= 2 and d_r_wrist_centile <= 2:
+    if lungs_capacity_centile <= 2 or d_l_wrist_centile <= 2 or d_r_wrist_centile <= 2:
         jel_garm = False
     else:
         jel_garm = True
