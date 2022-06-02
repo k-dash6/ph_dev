@@ -3,19 +3,22 @@ from sqlalchemy.exc import NoSuchColumnError
 from database import *
 from variables import *
 
-
-#TODO add output info
 @eel.expose
 def calculate_centiles(last_name, first_name, dad_name, gender, dob, doi, body_length, body_weight, ind_ketle,
                        lungs_capacity, d_r_wrist, d_l_wrist, systolic_pressure, diastolic_pressure, heart_rate,
                        teeth, biological_params):
-    for i in [body_length, body_weight, ind_ketle, lungs_capacity, d_r_wrist, d_l_wrist, systolic_pressure,
-              diastolic_pressure, heart_rate]:
-        try:
-            int(i)
-            continue
-        except:
-            return 'Вы ввели некорректно численное значение'
+    missing_fields = ["Длина тела", "Масса тела", "Жизненная ёмкость легких", "Динамометрия правой кисти",
+                      "Динамометрия левой кисти", "Систолическое артериальное давление",
+                      "Диастолическое артериальное давление", "Частота сердечных сокращений",
+                      "Количество постоянных зубов"]
+
+    missing_output=[]
+    for i, value in enumerate([body_length, body_weight, lungs_capacity, d_r_wrist, d_l_wrist, systolic_pressure,
+              diastolic_pressure, heart_rate, teeth]):
+        if not value.isdigit():
+            missing_output.append(missing_fields[i])
+    if missing_output != []:
+        return f'Некорректное значение в полях: {", ".join(map(str, missing_output))}'
 
     # Определение паспортного возраста и выбор нужной таблицы
     dob = datetime.strptime(dob, "%Y-%m-%d")
@@ -23,11 +26,13 @@ def calculate_centiles(last_name, first_name, dad_name, gender, dob, doi, body_l
     age = determine_the_passport_age(dob, doi)
     table, table_age_num = choose_table(age, gender)
 
+    result = f'{last_name} {first_name} {dad_name}, {table_age_num} лет'
+
     # Определение группы физического развития
     length_centile = get_centiles(table, 'Длина тела', body_length)
     ind_ketle_centile = get_centiles(table, 'Индекс Кетле', ind_ketle)
 
-    result = 'Группа физического развития: '
+    result += '<br/>Группа физического развития: '
     
     if 2 <= length_centile <= 7 and 3 <= ind_ketle_centile <= 6:
         result += "Нормальное физическое развитие."
@@ -50,7 +55,7 @@ def calculate_centiles(last_name, first_name, dad_name, gender, dob, doi, body_l
     d_r_wrist_centile = get_centiles(table, 'Динамометрия правой кисти', d_r_wrist)
     d_l_wrist_centile = get_centiles(table, 'Динамометрия левой кисти', d_l_wrist)
 
-    if lungs_capacity_centile <= 2 and d_l_wrist_centile <= 2 and d_r_wrist_centile <= 2:
+    if lungs_capacity_centile <= 2 or d_l_wrist_centile <= 2 or d_r_wrist_centile <= 2:
         jel_garm = False
     else:
         jel_garm = True
@@ -67,33 +72,29 @@ def calculate_centiles(last_name, first_name, dad_name, gender, dob, doi, body_l
     if all([imt_garm, jel_garm, gemo_garm]):
         result += '<br/>Гармоничное развитие'
     elif not imt_garm and jel_garm and gemo_garm:
-        result += '<br/>Дисгармоничное развитие засчёт показателя пропорциональности'
-        result += '<br/>развития по ИМТ'
+        result += '<br/>Дисгармоничное развитие за счёт показателя пропорциональности развития по ИМТ'
     elif imt_garm and not jel_garm and gemo_garm:
-        result += '<br/>Дисгармоничное развитие засчёт показателей жизненной ёмкости лёгких, '
-        result += '<br/> и динамометрии'
+        result += '<br/>Дисгармоничное развитие за счёт показателей жизненной ёмкости лёгких и динамометрии'
     elif imt_garm and jel_garm and not gemo_garm:
-        result += '<br/>Дисгармоничное развитие засчёт гемодинамических показателей'
+        result += '<br/>Дисгармоничное развитие за счёт гемодинамических показателей'
     elif not imt_garm and not jel_garm and gemo_garm:
-        result += '<br/>Дисгармоничное развитие засчёт показателей жизненной ёмкости лёгких, '
-        result += '<br/>динамометрии и показателя пропорциональности развития по ИМТ'
+        result += '<br/>Дисгармоничное развитие за счёт показателей жизненной ёмкости лёгких, динамометрии и показателя пропорциональности развития по ИМТ'
     elif not imt_garm and jel_garm and not gemo_garm:
-        result += '<br/>Дисгармоничное развитие засчёт гемодинамических показателей'
-        result += '<br/>и показателя пропорциональности развития по ИМТ'
+        result += '<br/>Дисгармоничное развитие за счёт гемодинамических показателей и показателя пропорциональности развития по ИМТ'
     elif imt_garm and not jel_garm and not gemo_garm:
-        result += '<br/>Дисгармоничное развитие засчёт показателей жизненной ёмкости лёгких, '
-        result += '<br/>динамометрии и гемодинамических показателей'
+        result += '<br/>Дисгармоничное развитие за счёт показателей жизненной ёмкости лёгких, динамометрии и гемодинамических показателей'
     elif not imt_garm and not jel_garm and not gemo_garm:
-        result += '<br/>Дисгармоничное развитие засчёт показателей жизненной ёмкости лёгких, '
-        result += '<br/>динамометрии, гемодинамических показателей и '
-        result += '<br/>показателя пропорциональности развития по ИМТ'
+        result += '<br/>Дисгармоничное развитие за счёт показателей жизненной ёмкости лёгких, динамометрии, гемодинамических показателей и показателя пропорциональности развития по ИМТ'
 
     # Зубы
-    if 7 <= int(table_age_num) <= 10 and gender == 'Ж' or 7 <= int(table_age_num) <= 12 and gender == 'М':
+    if 7 <= int(table_age_num) <= 10 and gender == 'F' or 7 <= int(table_age_num) <= 12 and gender == 'M':
         teeth_dev_str = teeth_development(int(teeth), int(table_age_num), gender)
         result += teeth_dev_str
-    if 10 <= int(table_age_num) and gender == 'Ж' or 12 <= int(table_age_num) and gender == 'М':
-        print(biological_params)
+    # Половое развитие
+    if 10 <= int(table_age_num) and gender == 'F' or 12 <= int(table_age_num) and gender == 'M':
+        for param in biological_params:
+            if param is None:
+                return 'Вы не ввели данные о биологическом развитии'
         bio_dev_str = biological_development(biological_params, int(table_age_num), gender)
         result += bio_dev_str
     return result
@@ -105,17 +106,16 @@ def determine_the_passport_age(dob, doi):
 
 
 def choose_table(age, gender):
-    if gender == "М":
+    if gender == "M":
         first = "Мальчики"
     else:
         first = "Девочки"
 
     # массив временных меток, между которыми меняется возраст
-    years_steps = [[2,10,16],[3,2,29],[3,3,0],[3,8,29],[3,9,0],[4,2,29],[4,3,0],[4,8,29],[4,9,0],[5,2,29],[5,3,0],[5,8,29],[5,9,0],[6,2,29],[6,3,0],[6,8,29],[6,9,0],[7,5,29],[7,6,0],[8,5,29],[8,6,0],[9,5,29],[9,6,0],[10,5,29],[10,6,0],[11,5,29],[11,6,0],[12,5,29],[12,6,0],[13,5,29],[13,6,0],[14,5,29],[14,6,0],[15,5,29],[15,6,0],[16,5,29],[16,6,0],[17,5,29]]
-    years = ["3","3,5","4","4,5","5","5,5","6","6,5","7","8","9","10","11","12","13","14","15","16","17"]  # массив возможных значений для имени таблицы (па размеру совпадает с предыдущим массивом)
+    years_steps = [[6,9,0],[7,5,29],[7,6,0],[8,5,29],[8,6,0],[9,5,29],[9,6,0],[10,5,29],[10,6,0],[11,5,29],[11,6,0],[12,5,29],[12,6,0],[13,5,29],[13,6,0],[14,5,29],[14,6,0],[15,5,29],[15,6,0],[16,5,29],[16,6,0],[17,5,29]]
+    years = ["7","8","9","10","11","12","13","14","15","16","17"]  # массив возможных значений для имени таблицы (па размеру совпадает с предыдущим массивом)
 
     second = None
-    third = None
     converted_age = age.years*10000 + age.months*100 + age.days  # для кодировки в формате yymmdd
 
     for i in range(0, len(years_steps), 2):
@@ -123,16 +123,12 @@ def choose_table(age, gender):
         right_border = years_steps[i+1][0]*10000 + years_steps[i+1][1]*100 + years_steps[i+1][2]
         if left_border <= converted_age <= right_border:
             second = years[int(i/2)]
-            if left_border >= 40900:  # перешли порог с года до лет (см названия таблиц после 4,5 года)
-                third = "лет"
-            else:
-                third = "года"
             break
 
     if second is None:  # если возраст не попал в границы, то кидаем exception
         raise RuntimeError('bad age')
 
-    return metadata.tables[f"{first}, {second} {third}"], second
+    return metadata.tables[f"{first}, {second} лет"], second
 
 
 def get_centiles(table, col_name, value):
@@ -156,8 +152,7 @@ def teeth_development(teeth, table_age_num, gender):
 
 
 def biological_development(biological_params, table_age_num, gender):
-    print(gender)
-    if gender == 'Ж':
+    if gender == 'F':
         points = 0
         for i in range(4):
             stage = biological_params[i]
@@ -170,13 +165,11 @@ def biological_development(biological_params, table_age_num, gender):
         elif points > bio_scale_girls[table_age_num][-1]:
             return '<br/> Уровень биологического развития (половое развитие) опережает паспортный возраст'
 
-    if gender == 'М':
-        print(biological_params)
+    if gender == 'M':
         points = 0
         for i in range(5):
             stage = biological_params[i]
             points += bio_points_boys[stage]
-        print(points)
 
         if points in bio_scale_boys[table_age_num]:
             return '<br/> Уровень биологического развития (половое развитие) соответствует паспортному возрасту'
