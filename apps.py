@@ -7,24 +7,41 @@ from variables import *
 def calculate_centiles(last_name, first_name, dad_name, gender, dob, doi, body_length, body_weight, ind_ketle,
                        lungs_capacity, d_r_wrist, d_l_wrist, systolic_pressure, diastolic_pressure, heart_rate,
                        teeth, biological_params):
-    missing_fields = ["Длина тела", "Масса тела", "Жизненная ёмкость легких", "Динамометрия правой кисти",
-                      "Динамометрия левой кисти", "Систолическое артериальное давление",
-                      "Диастолическое артериальное давление", "Частота сердечных сокращений",
-                      "Количество постоянных зубов"]
-
-    missing_output=[]
-    for i, value in enumerate([body_length, body_weight, lungs_capacity, d_r_wrist, d_l_wrist, systolic_pressure,
-              diastolic_pressure, heart_rate, teeth]):
-        if not value.isdigit():
-            missing_output.append(missing_fields[i])
-    if missing_output != []:
-        return f'Некорректное значение в полях: {", ".join(map(str, missing_output))}'
 
     # Определение паспортного возраста и выбор нужной таблицы
     dob = datetime.strptime(dob, "%Y-%m-%d")
     doi = datetime.strptime(doi, "%Y-%m-%d")
     age = determine_the_passport_age(dob, doi)
     table, table_age_num = choose_table(age, gender)
+
+    missing_output = []
+    if int(table_age_num) > 12 and gender == 'M' or int(table_age_num) > 10 and gender == 'F':
+        missing_fields = ["Длина тела", "Масса тела", "Жизненная ёмкость легких", "Динамометрия правой кисти",
+                          "Динамометрия левой кисти", "Систолическое артериальное давление",
+                          "Диастолическое артериальное давление", "Частота сердечных сокращений"]
+
+        for i, value in enumerate([body_length, body_weight, lungs_capacity, d_r_wrist, d_l_wrist, systolic_pressure,
+                                   diastolic_pressure, heart_rate]):
+            if not value.isdigit():
+                missing_output.append(missing_fields[i])
+        if missing_output != []:
+            return f'Некорректное значение в полях: {", ".join(map(str, missing_output))}'
+    else:
+        missing_fields = ["Длина тела", "Масса тела", "Жизненная ёмкость легких", "Динамометрия правой кисти",
+                          "Динамометрия левой кисти", "Систолическое артериальное давление",
+                          "Диастолическое артериальное давление", "Частота сердечных сокращений",
+                          "Количество постоянных зубов"]
+
+        for i, value in enumerate([body_length, body_weight, lungs_capacity, d_r_wrist, d_l_wrist, systolic_pressure,
+                  diastolic_pressure, heart_rate, teeth]):
+            if not value.isdigit():
+                missing_output.append(missing_fields[i])
+        if missing_output != []:
+            return f'Некорректное значение в полях: {", ".join(map(str, missing_output))}'
+
+
+
+
 
     result = f'{last_name} {first_name} {dad_name}, {table_age_num} лет'
 
@@ -55,7 +72,7 @@ def calculate_centiles(last_name, first_name, dad_name, gender, dob, doi, body_l
     d_r_wrist_centile = get_centiles(table, 'Динамометрия правой кисти', d_r_wrist)
     d_l_wrist_centile = get_centiles(table, 'Динамометрия левой кисти', d_l_wrist)
 
-    if lungs_capacity_centile <= 2 and d_l_wrist_centile <= 2 and d_r_wrist_centile <= 2:
+    if lungs_capacity_centile <= 2 or d_l_wrist_centile <= 2 or d_r_wrist_centile <= 2:
         jel_garm = False
     else:
         jel_garm = True
@@ -161,7 +178,7 @@ def biological_development(biological_params, table_age_num, gender):
         if points in bio_scale_girls[table_age_num]:
             return '<br/> Уровень биологического развития (половое развитие) соответствует паспортному возрасту'
         elif points < bio_scale_girls[table_age_num][0]:
-            return '<br/> Уровень биологического развития (рполовое развитие) отстает от паспортного возраста'
+            return '<br/> Уровень биологического развития (половое развитие) отстает от паспортного возраста'
         elif points > bio_scale_girls[table_age_num][-1]:
             return '<br/> Уровень биологического развития (половое развитие) опережает паспортный возраст'
 

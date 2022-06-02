@@ -1992,7 +1992,7 @@ def insert_init_data(metadata):
 
 
 metadata = MetaData()
-url = "postgresql+psycopg2://postgres:postgres@localhost:5432/physical_development"
+url = "sqlite:///ph_dev.db"
 
 database_exists = database_exists(url)
 if not database_exists:
