@@ -35,7 +35,68 @@ async function take_values (){
 
     document.getElementById("output").innerHTML = result;
     }
+
+async function clear_fields (){
+    document.getElementById("last_name").value = [];
+    document.getElementById("first_name").value = [];
+    document.getElementById("dad_name").value = [];
+    document.getElementById("dob").value = [];
+    document.getElementById("doi").value = [];
+    document.getElementById("body_length").value = [];
+    document.getElementById("body_weight").value = [];
+    document.getElementById("lungs_capacity").value = [];
+    document.getElementById("d_r_wrist").value = [];
+    document.getElementById("d_l_wrist").value = [];
+    document.getElementById("heart_rate").value = [];
+    document.getElementById("systolic_pressure").value = [];
+    document.getElementById("diastolic_pressure").value = [];
+    document.getElementById("teeth").value = [];
+
+    let radio_buttons = document.getElementsByName('pos');
+    for (let index = 0; index < radio_buttons.length; index++) {
+        radio_buttons[index].checked = false;
+      }
+    let radio_buttons_bp = document.getElementsByName('BP');
+    for (let index = 0; index < radio_buttons_bp.length; index++) {
+        radio_buttons_bp[index].checked = false;
+      }
+        let radio_buttons_bf = document.getElementsByName('BF');
+    for (let index = 0; index < radio_buttons_bf.length; index++) {
+        radio_buttons_bf[index].checked = false;
+      }
+        let radio_buttons_bax = document.getElementsByName('BAx');
+    for (let index = 0; index < radio_buttons_bax.length; index++) {
+        radio_buttons_bax[index].checked = false;
+      }
+        let radio_buttons_bl = document.getElementsByName('BL');
+    for (let index = 0; index < radio_buttons_bl.length; index++) {
+        radio_buttons_bl[index].checked = false;
+      }
+        let radio_buttons_bv = document.getElementsByName('BV');
+    for (let index = 0; index < radio_buttons_bv.length; index++) {
+        radio_buttons_bv[index].checked = false;
+      }
+        let radio_buttons_gma = document.getElementsByName('GMa');
+    for (let index = 0; index < radio_buttons_gma.length; index++) {
+        radio_buttons_gma[index].checked = false;
+      }
+        let radio_buttons_gpa = document.getElementsByName('GP');
+    for (let index = 0; index < radio_buttons_gpa.length; index++) {
+        radio_buttons_gpa[index].checked = false;
+      }
+        let radio_buttons_gax = document.getElementsByName('GAx');
+    for (let index = 0; index < radio_buttons_gax.length; index++) {
+        radio_buttons_gax[index].checked = false;
+      }
+        let radio_buttons_gme = document.getElementsByName('GMe');
+    for (let index = 0; index < radio_buttons_gme.length; index++) {
+        radio_buttons_gme[index].checked = false;
+      }
+}
+
+
 document.getElementById("submit").onclick = take_values;
+document.getElementById("clear").onclick = clear_fields;
 
 
 
