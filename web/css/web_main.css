@@ -55,7 +55,7 @@ form {
   transform: rotateX(180deg);
 }
 
-input[class="middle"]{
+.middle{
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;

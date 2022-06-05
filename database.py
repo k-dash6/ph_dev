@@ -1,21 +1,10 @@
-from tkinter import *
-from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey, text, Date, create_engine, CheckConstraint, \
-    Index, DDL, event, Numeric
-from sqlalchemy_utils import database_exists, create_database, drop_database
-import re
-import psycopg2
-import eel
-from dateutil.relativedelta import relativedelta #для подсчёта возраста
-from datetime import *
-
-# root = Tk()
-# root.title("Physical development")
-# root.geometry("1555x720")  # размер окна
+import os
+import sys
+from sqlalchemy import Table, Column, Integer, String, MetaData, Date, create_engine, Numeric
+from sqlalchemy_utils import database_exists, create_database
 
 
 def insert_init_data(metadata):
-    # metadata.drop_all()
-    # metadata.clear()
     patients = Table('Пациенты', metadata,
                      Column('Идентификатор', Integer, autoincrement=True, primary_key=True),
                      Column('Фамилия', String),
@@ -1991,8 +1980,19 @@ def insert_init_data(metadata):
            girl_8, girl_9, girl_10, girl_11, girl_12, girl_13, girl_14, girl_15, girl_16, girl_17
 
 
+def db_path():
+    """ Get absolute path to database, works for local and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, 'ph_dev.db')
+
+
 metadata = MetaData()
-url = "sqlite:///ph_dev.db"
+url = f"sqlite:///{db_path()}"
 
 database_exists = database_exists(url)
 if not database_exists:

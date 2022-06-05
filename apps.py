@@ -1,47 +1,51 @@
+import eel
 from sqlalchemy.exc import NoSuchColumnError
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 from database import *
 from variables import *
 
+
 @eel.expose
 def calculate_centiles(last_name, first_name, dad_name, gender, dob, doi, body_length, body_weight, ind_ketle,
                        lungs_capacity, d_r_wrist, d_l_wrist, systolic_pressure, diastolic_pressure, heart_rate,
-                       teeth, biological_params):
+                       teeth, biological_params):    # Определение паспортного возраста и выбор нужной таблицы
+    float_fields = ["Длина тела", "Масса тела", "Жизненная ёмкость легких", "Динамометрия правой кисти",
+                    "Динамометрия левой кисти", "Систолическое артериальное давление",
+                    "Диастолическое артериальное давление", "Частота сердечных сокращений"]
 
-    # Определение паспортного возраста и выбор нужной таблицы
+    if dob == '':
+        return 'Вы не ввели дату рождения.'
     dob = datetime.strptime(dob, "%Y-%m-%d")
+    if doi == '':
+        return 'Вы не ввели дату осмотра.'
     doi = datetime.strptime(doi, "%Y-%m-%d")
+
+    if not gender:
+        return 'Вы не выбрали пол.'
+
     age = determine_the_passport_age(dob, doi)
-    table, table_age_num = choose_table(age, gender)
+    table, table_age_num, error = choose_table(age, gender)
+    if table is None:
+        return error
 
     missing_output = []
     if int(table_age_num) > 12 and gender == 'M' or int(table_age_num) > 10 and gender == 'F':
-        missing_fields = ["Длина тела", "Масса тела", "Жизненная ёмкость легких", "Динамометрия правой кисти",
-                          "Динамометрия левой кисти", "Систолическое артериальное давление",
-                          "Диастолическое артериальное давление", "Частота сердечных сокращений"]
-
         for i, value in enumerate([body_length, body_weight, lungs_capacity, d_r_wrist, d_l_wrist, systolic_pressure,
                                    diastolic_pressure, heart_rate]):
-            if not value.isdigit():
-                missing_output.append(missing_fields[i])
-        if missing_output != []:
-            return f'Некорректное значение в полях: {", ".join(map(str, missing_output))}'
+            if not value:
+                missing_output.append(float_fields[i])
     else:
-        missing_fields = ["Длина тела", "Масса тела", "Жизненная ёмкость легких", "Динамометрия правой кисти",
-                          "Динамометрия левой кисти", "Систолическое артериальное давление",
-                          "Диастолическое артериальное давление", "Частота сердечных сокращений",
-                          "Количество постоянных зубов"]
+        float_fields += "Количество постоянных зубов"
 
         for i, value in enumerate([body_length, body_weight, lungs_capacity, d_r_wrist, d_l_wrist, systolic_pressure,
-                  diastolic_pressure, heart_rate, teeth]):
-            if not value.isdigit():
-                missing_output.append(missing_fields[i])
-        if missing_output != []:
-            return f'Некорректное значение в полях: {", ".join(map(str, missing_output))}'
+                                   diastolic_pressure, heart_rate, teeth]):
+            if not value:
+                missing_output.append(float_fields[i])
 
-
-
-
+    if missing_output:
+        return f'Отсутствует значение в полях: {", ".join(map(str, missing_output))}'
 
     result = f'{last_name} {first_name} {dad_name}, {table_age_num} лет'
 
@@ -143,16 +147,16 @@ def choose_table(age, gender):
             break
 
     if second is None:  # если возраст не попал в границы, то кидаем exception
-        raise RuntimeError('bad age')
+        return None, None, 'Возраст ребёнка не попадает в границы 7-17 лет.'
 
-    return metadata.tables[f"{first}, {second} лет"], second
+    return metadata.tables[f"{first}, {second} лет"], second, ''
 
 
 def get_centiles(table, col_name, value):
     all_rows = table.select().execute().fetchall()
     for num, row in enumerate(all_rows):
         try:
-            if row[col_name] > int(value):
+            if row[col_name] > float(value):
                 return num + 1
         except NoSuchColumnError:
             return 0
