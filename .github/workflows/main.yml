@@ -19,14 +19,15 @@ jobs:
           python-version: "3.8"
       #используемые модули
       - name: Dependencies setup
-        run: |
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
           
   build_and_upload:
     runs-on: ubuntu-20.04
     needs: dependencies
     steps:
       - uses: actions/checkout@v2
+      - name: Change output file name
+        run: sed -i "s/name='main',/name='${{ env.app_name }}',/" main.spec
       #создаём исполняемый файл
       - name: Build application
         uses: JackMcKew/pyinstaller-action-windows@main
@@ -38,5 +39,5 @@ jobs:
         uses: actions/upload-artifact@v2.3.1
         with:
           name: ${{ env.app_name }}
-          path: ./dist/windows/${{ env.app_name }}
+          path: ./dist/windows/
           retention-days: 90
