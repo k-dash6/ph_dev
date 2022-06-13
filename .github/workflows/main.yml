@@ -9,13 +9,9 @@ env:
 
 jobs:
   dependencies:
-    runs-on: ubuntu-20.04
+    runs-on: windows-2022
     steps:
       - uses: actions/checkout@v2
-      - name: Dir
-        run: |
-          pwd
-          ls -la
       #python и нужные библиотеки
       - name: Python setup
         uses: actions/setup-python@v2
