@@ -11,6 +11,7 @@ jobs:
   dependencies:
     runs-on: ubuntu-20.04
     steps:
+      - uses: actions/checkout@v2
       - name: Dir
         run: |
           pwd
@@ -22,7 +23,7 @@ jobs:
           python-version: "3.8"
       #используемые модули
       - name: Dependencies setup
-        run: pip install -r ./requirements.txt
+        run: pip install -r requirements.txt
       #зависимость для создания исполняемого файла
       - name: Package application
         uses: JackMcKew/pyinstaller-action-windows@main
