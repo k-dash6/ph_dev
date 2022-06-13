@@ -1,0 +1,42 @@
+name: CI
+
+#запуск как на pull, так и на push запросах
+on: [push, pull_request]
+
+#глобальные переменные окружения
+env:
+  app_name: app_ver_${{ github.sha }}
+
+jobs:
+  dependencies:
+    runs-on: windows-2022
+    steps:
+      #python и нужные библиотеки
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+          cache: 'pip'
+      - name: setups python
+        run: pip install -r requirements.txt
+      #зависимость для создания исполняемого файла
+      - name: Package Application
+        uses: JackMcKew/pyinstaller-action-windows@main
+        with:
+          path: src
+          
+  build_and_upload:
+    runs-on: windows-2022
+    needs: dependencies
+    steps:
+      - uses: actions/checkout@v2
+      #создаём исполняемый файл
+      - name: build application
+        run: pyinstaller -F —add-data "web;web" —add-data "ph_dev.db;." main.py -n ${{ env.app_name }}
+      
+      #выгружаем артефакт
+      - name: upload artifact
+        uses: actions/upload-artifact@v2.3.1
+        with:
+          name: ${{ env.app_name }}
+          path: ./dist/${{ env.app_name }}
+          retention-days: 90
