@@ -12,17 +12,21 @@ jobs:
     runs-on: windows-2022
     steps:
       #python и нужные библиотеки
-      - uses: actions/setup-python@v2
+      - name: Python setup
+        uses: actions/setup-python@v4.0.0
         with:
           python-version: "3.8"
           cache: 'pip'
-      - name: setups python
-        run: pip install -r requirements.txt
+      #используемые модули
+      - name: Dir
+        run: dir
+      - name: Dependencies setup
+        run: pip install -r ./requirements.txt
       #зависимость для создания исполняемого файла
-      - name: Package Application
+      - name: Package application
         uses: JackMcKew/pyinstaller-action-windows@main
         with:
-          path: src
+          path: ./
           
   build_and_upload:
     runs-on: windows-2022
