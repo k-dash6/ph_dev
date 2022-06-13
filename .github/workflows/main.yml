@@ -30,15 +30,15 @@ jobs:
         run: sed -i "s/name='main',/name='${{ env.app_name }}',/" main.spec
       #создаём исполняемый файл
       - name: Build application
-        run: pyinstaller --onefile --noconsole --add-data "web;web" --add-data "ph_dev.db;." main.py -n ${{ env.app_name }}
-#         uses: JackMcKew/pyinstaller-action-windows@main
-#         with:
-#           path: ./
+#         run: pyinstaller --onefile --noconsole --add-data "web;web" --add-data "ph_dev.db;." main.py -n ${{ env.app_name }}
+        uses: JackMcKew/pyinstaller-action-linux@main
+        with:
+          path: ./
       
       #выгружаем артефакт
       - name: Upload artifact
-        uses: actions/upload-artifact@v2.3.1
+        uses: actions/upload-artifact@v2
         with:
           name: ${{ env.app_name }}
-          path: ./dist
+          path: ./dist/linux
           retention-days: 90
