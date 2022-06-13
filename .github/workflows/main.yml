@@ -24,11 +24,11 @@ jobs:
           pip install pyinstaller
           pip install -r requirements.txt
           
-  build_and_upload:
-    runs-on: ubuntu-20.04
-    needs: dependencies
-    steps:
-      - uses: actions/checkout@v2
+#   build_and_upload:
+#     runs-on: ubuntu-20.04
+#     needs: dependencies
+#     steps:
+#       - uses: actions/checkout@v2
       - name: Change output file name
         run: sed -i "s/name='main',/name='${{ env.app_name }}',/" main.spec
       #создаём исполняемый файл
