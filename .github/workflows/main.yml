@@ -19,12 +19,15 @@ jobs:
           python-version: "3.8"
       #используемые модули
       - name: Dependencies setup
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
       #зависимость для создания исполняемого файла
       - name: Package application
         uses: JackMcKew/pyinstaller-action-windows@main
         with:
           path: ./
+      - name: Dir
+        run: ls -la
           
   build_and_upload:
     runs-on: ubuntu-20.04
@@ -33,7 +36,7 @@ jobs:
       - uses: actions/checkout@v2
       #создаём исполняемый файл
       - name: build application
-        run: pyinstaller -F —add-data "web;web" —add-data "ph_dev.db;." main.py -n ${{ env.app_name }}
+        run: pyinstaller --onefile --noconsole --add-data "web;web" --add-data "ph_dev.db;." main.py -n ${{ env.app_name }}
       
       #выгружаем артефакт
       - name: upload artifact
