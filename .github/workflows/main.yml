@@ -8,7 +8,18 @@ env:
   app_name: app_ver_${{ github.sha }}.exe
 
 jobs:
-  dependencies:
+  first_message:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Send message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Пользователь ${{ github.actor }} создал коммит: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+
+  build:
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v2
@@ -34,3 +45,41 @@ jobs:
           name: ${{ env.app_name }}
           path: ./dist
           retention-days: 90
+
+  #оповещение в телеграм
+  report:
+    if: failure() && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-20.04
+    needs: [first_message, build]
+    steps:
+      - name: Send telegram message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Коммит пользователя ${{ github.actor }} в репозиторий ${{ github.repository }}
+            Не прошёл один из шагов!
+            Более подробная информация:
+            https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            
+  export:
+    runs-on: ubuntu-20.04
+    needs: [first_message, build]
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          path: ./dist
+          name: ${{ app_name }}
+      - name: Send telegram message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          document: ${{ app_name }}
+          message: |
+            Коммит пользователя ${{ github.actor }} в репозиторий ${{ github.repository }}
+            Прошёл все шаги!
+            Более подробная информация:
+            https://github.com/${{ github.repository }}/commit/${{github.sha}}
