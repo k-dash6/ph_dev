@@ -27,22 +27,16 @@ jobs:
     needs: dependencies
     steps:
       - uses: actions/checkout@v2
-      #зависимость для создания исполняемого файла
+      #создаём исполняемый файл
       - name: Build application
         uses: JackMcKew/pyinstaller-action-windows@main
         with:
           path: ./
-      - name: Dir
-        run: |
-          ls -la
-          cd dist
-          ls -la
-      #создаём исполняемый файл
       
       #выгружаем артефакт
       - name: Upload artifact
         uses: actions/upload-artifact@v2.3.1
         with:
           name: ${{ env.app_name }}
-          path: ./dist/${{ env.app_name }}
+          path: ./dist/windows/${{ env.app_name }}
           retention-days: 90
