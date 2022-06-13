@@ -24,13 +24,13 @@ jobs:
           pip install pyinstaller
           pip install -r requirements.txt
           
-#   build_and_upload:
-#     runs-on: ubuntu-20.04
-#     needs: dependencies
-#     steps:
-#       - uses: actions/checkout@v2
-      - name: Change output file name
-        run: sed -i "s/name='main',/name='${{ env.app_name }}',/" main.spec
+  build_and_upload:
+    runs-on: windows-2022
+    needs: dependencies
+    steps:
+      - uses: actions/checkout@v2
+#       - name: Change output file name
+#         run: sed -i "s/name='main',/name='${{ env.app_name }}',/" main.spec
       #создаём исполняемый файл
       - name: Build application
         run: python -m PyInstaller --onefile --noconsole --add-data "web;web" --add-data "ph_dev.db;." main.py -n ${{ env.app_name }}
