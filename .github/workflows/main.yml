@@ -21,25 +21,26 @@ jobs:
       - name: Dependencies setup
         run: |
           pip install -r requirements.txt
-      #зависимость для создания исполняемого файла
-      - name: Package application
-        uses: JackMcKew/pyinstaller-action-windows@main
-        with:
-          path: ./
-      - name: Dir
-        run: ls -la
           
   build_and_upload:
     runs-on: ubuntu-20.04
     needs: dependencies
     steps:
-      - uses: actions/checkout@v2
+      #- uses: actions/checkout@v2
+      #зависимость для создания исполняемого файла
+      - name: Build application
+        uses: JackMcKew/pyinstaller-action-windows@main
+        with:
+          path: ./
+      - name: Dir
+        run: |
+          ls -la
+          cd dist
+          ls -la
       #создаём исполняемый файл
-      - name: build application
-        run: pyinstaller --onefile --noconsole --add-data "web;web" --add-data "ph_dev.db;." main.py -n ${{ env.app_name }}
       
       #выгружаем артефакт
-      - name: upload artifact
+      - name: Upload artifact
         uses: actions/upload-artifact@v2.3.1
         with:
           name: ${{ env.app_name }}
