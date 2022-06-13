@@ -5,7 +5,7 @@ on: [push, pull_request]
 
 #глобальные переменные окружения
 env:
-  app_name: app_ver_${{ github.sha }}
+  app_name: app_ver_${{ github.sha }}.exe
 
 jobs:
   dependencies:
