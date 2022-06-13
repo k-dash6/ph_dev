@@ -72,13 +72,13 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           path: ./dist
-          name: ${{ app_name }}
+          name: ${{ env.app_name }}
       - name: Send telegram message
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          document: ${{ app_name }}
+          document: ${{ env.app_name }}
           message: |
             Коммит пользователя ${{ github.actor }} в репозиторий ${{ github.repository }}
             Прошёл все шаги!
