@@ -33,11 +33,8 @@ jobs:
         uses: JackMcKew/pyinstaller-action-windows@main
         with:
           path: ./
-      - name: DIR
-        run: |
-          cd dist/windows
-          ls -la
-        
+      - name: echo
+        run: cat main.spec
       
       #выгружаем артефакт
       - name: Upload artifact
