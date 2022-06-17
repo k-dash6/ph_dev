@@ -1,0 +1,86 @@
+name: CI
+
+#запуск как на pull, так и на push запросах
+on: [push, pull_request]
+
+#глобальные переменные окружения
+env:
+  app_name: app_ver_${{ github.sha }}.exe
+
+jobs:
+  first_message:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Send message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Пользователь ${{ github.actor }} создал коммит!
+
+  build:
+    needs: [first_message]
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v2
+      #python и нужные библиотеки
+      - name: Python setup
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+      #используемые модули
+      - name: Dependencies setup
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+          pip install -r requirements.txt
+      #создаём исполняемый файл
+      - name: Build application
+        run: python -m PyInstaller --onefile --noconsole --add-data "web;web" --add-data "ph_dev.db;." main.py -n ${{ env.app_name }}
+        
+      
+      #выгружаем артефакт
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.app_name }}
+          path: ./dist
+          retention-days: 90
+
+  #оповещение в телеграм
+  report:
+    if: failure() && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-20.04
+    needs: [build]
+    steps:
+      - name: Send telegram message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Коммит пользователя ${{ github.actor }} в репозиторий ${{ github.repository }}
+            Не прошёл один из шагов!
+            Более подробная информация:
+            https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            
+  export:
+    runs-on: ubuntu-20.04
+    needs: [build]
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          path: ./dist
+          name: ${{ env.app_name }}
+      - name: Send telegram message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          document: ./dist/${{ env.app_name }}
+          message: |
+            Коммит пользователя ${{ github.actor }} в репозиторий ${{ github.repository }} прошёл все шаги!
+            Более подробная информация:
+            https://github.com/${{ github.repository }}/commit/${{github.sha}}
